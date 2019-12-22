@@ -17,7 +17,7 @@ pacman --noconfirm --needed -S networkmanager
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
-pacman --noconfirm --needed -S dialog grub linux
+pacman --noconfirm --needed -S dialog grub linux lvm2 linux-firmware
 
 mkinitcpio -p linux 
 
