@@ -17,9 +17,8 @@ pacman --noconfirm --needed -S networkmanager
 systemctl enable NetworkManager
 systemctl start NetworkManager
 
-pacman --noconfirm --needed -S dialog grub
+pacman --noconfirm --needed -S dialog grub linux
 
-pacman -S linux 
 mkinitcpio -p linux 
 grub-install --target=i386-pc /dev/sda && grub-mkconfig -o /boot/grub/grub.cfg
 
