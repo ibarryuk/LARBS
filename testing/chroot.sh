@@ -1,10 +1,10 @@
 #Potential variables: timezone, lang and local
 
-passwd
+#passwd
 
-TZuser=$(cat tzfinal.tmp)
+#TZuser=$(cat tzfinal.tmp)
 
-ln -sf /usr/share/zoneinfo/$TZuser /etc/localtime
+#ln -sf /usr/share/zoneinfo/$TZuser /etc/localtime
 
 hwclock --systohc
 
@@ -13,10 +13,6 @@ echo "en_GB.UTF-8 UTF-8" >> /etc/locale.gen
 echo "en_GB ISO-8859-1" >> /etc/locale.gen
 locale-gen
 
-sed  -i.bak -e 's/MODULES=(*/MODULES=(ext4/' \
- -e 's/#* *HOOKS=(base udev autodetect modconf block */HOOKS=(base udev autodetect modconf block encrypt lvm2/' /etc/mkinitcpio.conf
-
-
 pacman --noconfirm --needed -S networkmanager
 systemctl enable NetworkManager
 systemctl start NetworkManager
@@ -24,6 +20,10 @@ systemctl start NetworkManager
 pacman --noconfirm --needed -S dialog grub linux
 
 mkinitcpio -p linux 
+
+sed  -i.bak -e 's/MODULES=(*/MODULES=(ext4/' \
+ -e 's/#* *HOOKS=(base udev autodetect modconf block */HOOKS=(base udev autodetect modconf block encrypt lvm2/' /etc/mkinitcpio.conf
+
 grub-install --target=i386-efi /dev/sda 
 
 sed  -i.bak -e 's/GRUB_CMDLINE_LINUX="*/GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards/' /etc/mkinitcpio.conf
