@@ -26,7 +26,7 @@ sed  -i.bak -e 's/MODULES=(*/MODULES=(ext4/' \
 
 grub-install --target=i386-efi /dev/sda 
 
-sed  -i.bak -e 's/GRUB_CMDLINE_LINUX="*/GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards/' /etc/mkinitcpio.conf
+sed  -i.bak -e 's/GRUB_CMDLINE_LINUX="*/GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards/' /etc/default/grub.cfg
 
 grub-mkconfig -o /boot/grub/grub.cfg
 
