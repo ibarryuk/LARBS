@@ -1,10 +1,10 @@
 #Potential variables: timezone, lang and local
 
-#passwd
+passwd
 
-#TZuser=$(cat tzfinal.tmp)
+TZuser=$(cat tzfinal.tmp)
 
-#ln -sf /usr/share/zoneinfo/$TZuser /etc/localtime
+ln -sf /usr/share/zoneinfo/$TZuser /etc/localtime
 
 hwclock --systohc
 
