@@ -66,16 +66,16 @@ mount /dev/sda1 /mnt/boot/efi
 
 pacman -Sy --noconfirm archlinux-keyring
 
-pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant
+#pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant
 
-genfstab -U /mnt >> /mnt/etc/fstab
-cat tz.tmp > /mnt/tzfinal.tmp
-rm tz.tmp
-mv comp /mnt/etc/hostname
+#genfstab -U /mnt >> /mnt/etc/fstab
+#cat tz.tmp > /mnt/tzfinal.tmp
+#rm tz.tmp
+#mv comp /mnt/etc/hostname
 
-curl https://raw.githubusercontent.com/ibarryuk/LARBS/master/testing/chroot.sh > /mnt/chroot.sh && arch-chroot /mnt bash chroot.sh && rm /mnt/chroot.sh
+#curl https://raw.githubusercontent.com/ibarryuk/LARBS/master/testing/chroot.sh > /mnt/chroot.sh && arch-chroot /mnt bash chroot.sh && rm /mnt/chroot.sh
 
 
-dialog --defaultno --title "Final Qs" --yesno "Reboot computer?"  5 30 && reboot
-dialog --defaultno --title "Final Qs" --yesno "Return to chroot environment?"  6 30 && arch-chroot /mnt
-clear
+#dialog --defaultno --title "Final Qs" --yesno "Reboot computer?"  5 30 && reboot
+#dialog --defaultno --title "Final Qs" --yesno "Return to chroot environment?"  6 30 && arch-chroot /mnt
+#clear
