@@ -10,6 +10,13 @@ curl -LO larbs.xyz/larbs.sh
 sh larbs.sh
 ```
 
+OR for full install:
+
+```
+curl -LO https://git.io/Jedyq
+sh Jedyq
+```
+
 That's it.
 
 ## What is LARBS?
