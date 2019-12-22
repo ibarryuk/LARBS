@@ -13,7 +13,7 @@ dialog --defaultno --title "DON'T BE A BRAINLET!" --yesno "Do you think I'm memi
 
 dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
-dialog --defaultno --title "Time Zone select" --yesno "Do you want use the default time zone(America/New_York)?.\n\nPress no for select your own time zone"  10 60 && echo "America/New_York" > tz.tmp || tzselect > tz.tmp
+dialog --defaultno --title "Time Zone select" --yesno "Do you want use the default time zone(Europe/London)?.\n\nPress no for select your own time zone"  10 60 && echo "Europe/London" > tz.tmp || tzselect > tz.tmp
 
 dialog --no-cancel --inputbox "Enter partitionsize in gb, separated by space (swap & root)." 10 60 2>psize
 
@@ -27,49 +27,52 @@ fi
 timedatectl set-ntp true
 
 cat <<EOF | fdisk /dev/sda
-o
+g
 n
-p
 
 
-+200M
++100M
 n
-p
 
 
-+${SIZE[0]}G
++250M
 n
-p
-
-
-+${SIZE[1]}G
-n
-p
 
 
 w
 EOF
 partprobe
 
-yes | mkfs.ext4 /dev/sda4
-yes | mkfs.ext4 /dev/sda3
-yes | mkfs.ext4 /dev/sda1
-mkswap /dev/sda2
-swapon /dev/sda2
-mount /dev/sda3 /mnt
+yes | mkfs.vfat -F32 /dev/sda1
+yes | mkfs.ext2 /dev/sda2
+
+cryptsetup -c aes-xts-plain64 -y --use-random luksFormat /dev/sda3
+cryptsetup luksOpen /dev/sda3 luks
+
+pvcreate /dev/mapper/luks
+vgcreate vg0 /dev/mapper/luks
+lvcreate --size 8G vg0 --name swap
+lvcreate -l +100%FREE vg0 --name root
+
+mkfs.ext4 /dev/mapper/vg0-root
+mkswap /dev/mapper/vg0-swap
+swapon /dev/mapper/vg0-swap
+
+mount /dev/mapper/vg0-root /mnt
 mkdir -p /mnt/boot
-mount /dev/sda1 /mnt/boot
-mkdir -p /mnt/home
-mount /dev/sda4 /mnt/home
+mount /dev/sda2 /mnt/boot
+mkdir /mnt/boot/efi
+mount /dev/sda1 /mnt/boot/efi
 
 pacman -Sy --noconfirm archlinux-keyring
 
-pacstrap /mnt base base-devel
+pacstrap /mnt base base-devel grub-efi-x86_64 zsh vim git efibootmgr dialog wpa_supplicant
 
 genfstab -U /mnt >> /mnt/etc/fstab
 cat tz.tmp > /mnt/tzfinal.tmp
 rm tz.tmp
 mv comp /mnt/etc/hostname
+
 curl https://raw.githubusercontent.com/ibarryuk/LARBS/master/testing/chroot.sh > /mnt/chroot.sh && arch-chroot /mnt bash chroot.sh && rm /mnt/chroot.sh
 
 
