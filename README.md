@@ -6,8 +6,8 @@
 On an Arch based distribution as root, run the following:
 
 ```
-curl -LO larbs.xyz/larbs.sh
-sh larbs.sh
+curl -LO https://git.io/JedbQ
+sh JedbQ
 ```
 
 OR for full install:
