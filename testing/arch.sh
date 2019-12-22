@@ -15,14 +15,14 @@ dialog --no-cancel --inputbox "Enter a name for your computer." 10 60 2> comp
 
 dialog --defaultno --title "Time Zone select" --yesno "Do you want use the default time zone(Europe/London)?.\n\nPress no for select your own time zone"  10 60 && echo "Europe/London" > tz.tmp || tzselect > tz.tmp
 
-dialog --no-cancel --inputbox "Enter partitionsize in gb, separated by space (swap & root)." 10 60 2>psize
+#dialog --no-cancel --inputbox "Enter partitionsize in gb, separated by space (swap & root)." 10 60 2>psize
 
-IFS=' ' read -ra SIZE <<< $(cat psize)
+#IFS=' ' read -ra SIZE <<< $(cat psize)
 
-re='^[0-9]+$'
-if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $re ]] ; then
-    SIZE=(12 25);
-fi
+#re='^[0-9]+$'
+#if ! [ ${#SIZE[@]} -eq 2 ] || ! [[ ${SIZE[0]} =~ $re ]] || ! [[ ${SIZE[1]} =~ $re ]] ; then
+#    SIZE=(12 25);
+#fi
 
 timedatectl set-ntp true
 
