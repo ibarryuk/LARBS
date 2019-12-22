@@ -22,7 +22,7 @@ pacman --noconfirm --needed -S dialog grub linux
 mkinitcpio -p linux 
 
 sed  -i.bak -e 's/MODULES=(*/MODULES=(ext4/' \
- -e 's/#* *HOOKS=(base udev autodetect modconf block */HOOKS=(base udev autodetect modconf block encrypt lvm2/' /etc/mkinitcpio.conf
+ -e 's/#* *HOOKS=(base udev autodetect modconf block */HOOKS=(base udev autodetect modconf block encrypt lvm2 /' /etc/mkinitcpio.conf
 
 grub-install --target=i386-efi /dev/sda 
 
