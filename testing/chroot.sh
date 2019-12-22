@@ -24,7 +24,7 @@ systemctl start NetworkManager
 pacman --noconfirm --needed -S dialog grub linux
 
 mkinitcpio -p linux 
-grub-install /dev/sda 
+grub-install --target=i386-efi /dev/sda 
 
 sed  -i.bak -e 's/GRUB_CMDLINE_LINUX="*/GRUB_CMDLINE_LINUX="cryptdevice=/dev/sda3:luks:allow-discards/' /etc/mkinitcpio.conf
 
